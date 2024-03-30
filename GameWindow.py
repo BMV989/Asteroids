@@ -6,17 +6,16 @@ from PyQt5.QtWidgets import QLabel, QSizePolicy, QApplication, QWidget
 
 
 class GameWindow(QWidget):
-    def __init__(self, width, height, background):
+    def __init__(self, width, height):
         super().__init__()  # бесполезная залупа
 
-        self._width = width
-        self._height = height
-        self._img = background
+        self.width = width
+        self.height = height
 
-        # self.setGeometry(0, 0, self._size.width(), self._size.height())
+        self.resize(self.width, self.height)
 
-        self.show()
-
+        self.image = QImage(self.width, self.height, QImage.Format_RGB32)
+        self.image.fill(Qt.black)
 
     def game_loop(self):
         self.update()
