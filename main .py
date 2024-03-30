@@ -62,6 +62,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.size = screen.size()
         self.width = self.size.width()
         self.height = self.size.height()
+        # self.width = 1600
+        # self.height = 1000
         self.resize(self.width, self.height)
 
         self.setWindowTitle("Asteroids")
@@ -70,7 +72,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.game = GameWindow(self.width, self.height)
         self.setCentralWidget(self.start_screen)
 
-        self.showMaximized()
+        # self.showMaximized()
         # start_screen.setLayout(self.layout())
 
     def keyPressEvent(self, event):
