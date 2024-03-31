@@ -9,7 +9,7 @@ from Objects.Starship import Starship
 
 class GameWindow(QWidget):
     def __init__(self, width, height):
-        super().__init__()  # бесполезная залупа
+        super().__init__()
 
         self.width = width
         self.height = height

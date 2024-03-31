@@ -56,14 +56,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.next_window = False
+        self.is_start = True
 
         screen = QApplication.primaryScreen()
         self.size = screen.size()
         self.width = self.size.width()
         self.height = self.size.height()
-        # self.width = 1600
-        # self.height = 1000
         self.resize(self.width, self.height)
 
         self.setWindowTitle("Asteroids")
@@ -72,16 +70,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.game = GameWindow(self.width, self.height)
         self.setCentralWidget(self.start_screen)
 
-        # self.showMaximized()
-        # start_screen.setLayout(self.layout())
-
     def keyPressEvent(self, event):
-        if (event.key() == Qt.Key_Space) and (not self.next_window):
-            self.next_window = True
+        if (event.key() == Qt.Key_Space) and self.is_start:
+            self.is_start = False
             self.start_screen.hide()
             self.setCentralWidget(self.game)
             self.showMaximized()
-            # self.game.show()
 
 
 if __name__ == "__main__":
