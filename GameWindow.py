@@ -15,7 +15,6 @@ class GameWindow(QWidget):
     def __init__(self, width, height):
         super().__init__()
 
-        self.lock = True
         self.width = width
         self.height = height
 
@@ -67,7 +66,6 @@ class GameWindow(QWidget):
             print(a, v)
         a[0] = 0
         a[1] = 0
-        self.lock = True
 
     def upd(self):
         self.update()
@@ -78,10 +76,9 @@ class GameWindow(QWidget):
         a = self.starship.get_a()
         self.starship_cords = self.starship.calc_cords()
         self.update()
-        print(self.lock)
         pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 
-        if self.lock:
+        if threading.Lock():
             pool.submit(self.proc_a)
             pool.submit(self.upd)
             pool.shutdown(wait=True)

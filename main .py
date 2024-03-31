@@ -50,8 +50,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.in_move = False
-
         self.is_start = True
 
         screen = QApplication.primaryScreen()
@@ -80,7 +78,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if event.key() == Qt.Key_Up:
             print("bebra")
-            self.in_move = True
             self.game.on_move_forward()
 
 
