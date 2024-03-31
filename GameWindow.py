@@ -2,7 +2,7 @@ import sys
 import time
 from multiprocessing import Process
 import threading
-
+import concurrent.futures
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt, QRect, QEvent
 from PyQt5.QtGui import QImage, QPainter, QFont, QPen
@@ -46,26 +46,19 @@ class GameWindow(QWidget):
         painter.drawLine(*c4, *c5)
         painter.end()
 
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Left:
-            self.starship.rotate(10)
-            self.starship.calc_cords()
-            # self.update()
-
     def on_rotate_left(self):
-        self.starship.rotate(5)
+        self.starship.rotate(15)
         self.starship_cords = self.starship.calc_cords()
         self.update()
 
     def on_rotate_right(self):
-        self.starship.rotate(-5)
+        self.starship.rotate(-15)
         self.starship_cords = self.starship.calc_cords()
         self.update()
 
     def proc_a(self, v, a):
         self.lock = False
         while v[0] > 0 or v[1] > 0:
-            print("bebra")
             a[0] -= 1
             a[1] -= 1
             self.starship.move(0)
@@ -77,7 +70,6 @@ class GameWindow(QWidget):
         self.lock = True
 
     def upd(self):
-        print("bebra2")
         self.update()
 
     def on_move_forward(self):  # fix threading
@@ -87,10 +79,9 @@ class GameWindow(QWidget):
         self.starship_cords = self.starship.calc_cords()
         self.update()
         print(self.lock)
-        t1 = threading.Thread(target=self.proc_a, args=(v, a))
-        t2 = threading.Thread(target=self.upd, args=())
+        pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+
         if self.lock:
-            t1.start()
-            t2.start()
-            t1.join()
-            t2.join()
+            pool.submit(self.proc_a)
+            pool.submit(self.upd)
+            pool.shutdown(wait=True)
