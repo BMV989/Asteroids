@@ -21,26 +21,19 @@ class StartWidget(QWidget):
         self.image.fill(Qt.black)
 
         label = QLabel("Asteroids", self)
-        label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-
-        label.setGeometry(0, 0, 900, 250)  # -48
-        label.setIndent(0)
-        h = self.height // 4 - 250 // 2 - 48
-        w = self.width // 2 - 900 // 2
-        label.move(w, h)
+        label.setGeometry(250, 0, 900, 550)  # -48
         label.setStyleSheet("""
                     color: White;
                 """)
         label.setFont(QFont("Times", 100))
 
         label = QLabel("Press space to play", self)
-        label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        label.setGeometry(0, 0, 1200, 250)  # -48
-        h1 = 5 * self.height // 8 - 250 // 2 - 48
-        w1 = self.width // 2 - 1200 // 2
-        label.move(w1, h1)
+        label.setGeometry(0, 300, 1000, 250)  # -48
+
         label.setStyleSheet("""
                     color: White;
                 """)
