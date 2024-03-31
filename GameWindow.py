@@ -56,7 +56,6 @@ class GameWindow(QWidget):
         self.update()
 
     def proc_a(self, v, a):
-        self.lock = False
         while v[0] > 0 or v[1] > 0:
             a[0] -= 1
             a[1] -= 1
