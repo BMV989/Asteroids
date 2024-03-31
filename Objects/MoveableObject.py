@@ -9,6 +9,6 @@ class MoveableObject(ABC):
         self.a = a
 
     @abstractmethod
-    def move(self):
+    def move(self, a):
         pass
 

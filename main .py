@@ -10,6 +10,7 @@ from GameWindow import GameWindow
 class StartWidget(QWidget):
     def __init__(self, width, height):
         super().__init__()
+
         self.width = width
         self.height = height
         print(self.width, self.height)
@@ -56,6 +57,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.in_move = False
+
         self.is_start = True
 
         screen = QApplication.primaryScreen()
@@ -76,6 +79,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self.start_screen.hide()
             self.setCentralWidget(self.game)
             self.showMaximized()
+
+        if event.key() == Qt.Key_Left:
+            self.game.on_rotate_left()
+        if event.key() == Qt.Key_Right:
+            self.game.on_rotate_right()
+
+        if event.key() == Qt.Key_Up:
+            print("bebra")
+            self.in_move = True
+            self.game.on_move_forward()
 
 
 if __name__ == "__main__":
