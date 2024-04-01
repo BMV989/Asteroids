@@ -1,8 +1,8 @@
-from Objects.MoveableObject import MoveableObject
+from Objects.MovableObject import MovableObject
 from math import sin, cos, pi
 
 
-class Starship(MoveableObject):
+class Starship(MovableObject):
     def __init__(self, w, h):
         #########################################
         self.x = w // 2  # координаты носа

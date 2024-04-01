@@ -94,7 +94,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.game.on_rotate_right()
 
         if event.key() == Qt.Key_Up:
-            print("bebra")
             self.game.on_move_forward()
 
 
