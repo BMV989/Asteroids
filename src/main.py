@@ -1,9 +1,10 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtCore import Qt, QRect, QEvent
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPainter, QFont
-from PyQt5.QtWidgets import QLabel, QSizePolicy, QApplication, QWidget
+from PyQt5.QtWidgets import QLabel, QSizePolicy, QWidget
 
+import constants
 from GameWindow import GameWindow
 
 
@@ -21,36 +22,20 @@ class StartWidget(QWidget):
         self.image.fill(Qt.black)
 
         label = QLabel("Asteroids", self)
-        if width == 1440 and height == 900:
-            label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
-            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            label.setGeometry(250, 0, 900, 550)  # -48
-        else:
-            label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        label.setGeometry(250, 0, 900, 550)  # -48
 
-            label.setGeometry(0, 0, 900, 250)  # -48
-            label.setIndent(0)
-            h = self.height // 4 - 250 // 2 - 48
-            w = self.width // 2 - 900 // 2
-            label.move(w, h)
         label.setStyleSheet("""
                     color: White;
                 """)
         label.setFont(QFont("Times", 100))
 
         label = QLabel("Press space to play", self)
-        if width == 1440 and height == 900:
-            label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
-            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            label.setGeometry(0, 300, 1000, 250)  # -48
-        else:
-            label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            label.setGeometry(0, 0, 1200, 250)  # -48
-            h1 = 5 * self.height // 8 - 250 // 2 - 48
-            w1 = self.width // 2 - 1200 // 2
-            label.move(w1, h1)
+        label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        label.setGeometry(0, 300, 1000, 250)  # -48
+
         label.setStyleSheet("""
                     color: White;
                 """)
@@ -68,11 +53,10 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
 
         self.is_start = True
+        self.on_move = False
 
-        screen = QApplication.primaryScreen()
-        self.size = screen.size()
-        self.width = self.size.width()
-        self.height = self.size.height()
+        self.width = constants.WIDOW_WIDTH
+        self.height = constants.WIDOW_HEIGHT
         self.resize(self.width, self.height)
 
         self.setWindowTitle("Asteroids")
@@ -88,17 +72,25 @@ class MainWindow(QtWidgets.QMainWindow):
             self.setCentralWidget(self.game)
             self.showMaximized()
 
-        if event.key() == Qt.Key_Left:
+        elif event.key() == Qt.Key_Left:
             self.game.on_rotate_left()
-        if event.key() == Qt.Key_Right:
+        elif event.key() == Qt.Key_Right:
             self.game.on_rotate_right()
 
-        if event.key() == Qt.Key_Up:
+        elif event.key() == Qt.Key_Up:
+            self.on_move = True
             self.game.on_move_forward()
 
+    def keyReleaseEvent(self, event):
+        self.on_move = False
 
-if __name__ == "__main__":
+
+def main():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

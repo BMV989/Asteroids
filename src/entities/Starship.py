@@ -1,5 +1,9 @@
-from Objects.MovableObject import MovableObject
 from math import sin, cos, pi
+
+from PyQt5.QtCore import QPoint
+from PyQt5.QtGui import QPainter
+
+from src.entities.MovableObject import MovableObject
 
 
 class Starship(MovableObject):
@@ -15,7 +19,7 @@ class Starship(MovableObject):
         self.small_r = self.side * sin(self.angle / 2)
         self.r2 = self.r * 0.2
         self.speed = [0, 0]
-        self.a = [0, 0]
+        self.a = [[0, 0]]
         #########################################
         self.center = int(self.x), int(self.y + self.r)
         self.side_x1 = int(self.x - self.side * sin(self.angle / 2))
@@ -30,9 +34,12 @@ class Starship(MovableObject):
         self.small_c_x1 = self.center[0] - self.r2 * sin(self.angle_rotation)
         self.small_c_y1 = self.center[1] - self.r2 * cos(self.angle_rotation)
         #########################################
-        super().__init__(self.x, self.y, self.speed, self.a)
+        super().__init__(QPoint(self.x, self.y))
 
-    def move(self, a):
+    def move(self):
+        self.a[-1][0] = ???
+
+        """
         self.a[0] += a
         self.a[1] += a
 
@@ -41,6 +48,7 @@ class Starship(MovableObject):
         self.x = self.x + self.speed[0]
         self.y = self.y + self.speed[1]
         self.center = int(self.x), int(self.y + self.r)
+        """
 
     def get_v(self):
         return self.speed
@@ -79,3 +87,9 @@ class Starship(MovableObject):
         self.side_y3 = int(self.small_c_y1 + self.small_r * 0.8 * sin(angle_in_rads))
         self.side_x4 = int(self.small_c_x1 + self.small_r * 0.8 * cos(angle_in_rads))
         self.side_y4 = int(self.small_c_y1 - self.small_r * 0.8 * sin(angle_in_rads))
+
+    def paint(self, painter: QPainter):
+        c1, c2, c3, c4, c5 = self.calc_cords()
+        painter.drawLine(*c1, *c2)
+        painter.drawLine(*c1, *c3)
+        painter.drawLine(*c4, *c5)
