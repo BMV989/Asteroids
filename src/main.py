@@ -70,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.is_start = False
             self.start_screen.hide()
             self.setCentralWidget(self.game)
-            self.showMaximized()
+            # self.showMaximized()
 
         elif event.key() == Qt.Key_Left:
             self.game.on_rotate_left()
@@ -82,7 +82,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.game.on_move_forward()
 
     def keyReleaseEvent(self, event):
-        self.on_move = False
+        if event.key() == Qt.Key_Up:
+            self.on_move = False
+            # self.game.zero_a()
 
 
 def main():
