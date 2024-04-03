@@ -2,7 +2,8 @@ from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QImage, QPainter, QPen
 from PyQt5.QtWidgets import QWidget
 
-from src.entities.BigAsteroid1 import BigAsteroid1
+from src import constants
+from src.entities.BigAsteroidA import BigAsteroid1
 from src.entities.Starship import Starship
 
 
@@ -21,7 +22,7 @@ class GameWindow(QWidget):
         self.asteroids = [BigAsteroid1()]
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
-        self.timer.start(1000//1000)
+        self.timer.start(1000 // constants.FPS)
 
     def game_loop(self):
         self.starship.calc_a()
