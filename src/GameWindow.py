@@ -3,7 +3,7 @@ from PyQt5.QtGui import QImage, QPainter, QPen
 from PyQt5.QtWidgets import QWidget
 
 from src import constants
-from src.entities.BigAsteroidA import BigAsteroid1
+from src.entities.BigAsteroidA import BigAsteroidA
 from src.entities.Starship import Starship
 
 
@@ -19,7 +19,7 @@ class GameWindow(QWidget):
         self.image = QImage(self.width, self.height, QImage.Format_RGB32)
         self.image.fill(Qt.black)
         self.starship = Starship(self.width, self.height)
-        self.asteroids = [BigAsteroid1()]
+        self.asteroids = [BigAsteroidA()]
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
         self.timer.start(1000 // constants.FPS)

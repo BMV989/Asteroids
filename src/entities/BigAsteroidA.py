@@ -6,7 +6,7 @@ from src.entities.MovableObject import MovableObject
 from random import randint
 
 
-class BigAsteroid1(MovableObject):
+class BigAsteroidA(MovableObject):
     def __init__(self):
         self.position = QPoint(randint(120, constants.WIDOW_WIDTH - 120),
                                randint(120, constants.WIDOW_HEIGHT - 120))

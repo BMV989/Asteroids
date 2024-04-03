@@ -1,11 +1,7 @@
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QImage, QPainter, QFont
-from PyQt5.QtWidgets import QLabel, QSizePolicy, QWidget
 
-import constants
-from GameWindow import GameWindow
+from PyQt5 import QtWidgets
+
 from src.MainWindow import MainWindow
 
 
