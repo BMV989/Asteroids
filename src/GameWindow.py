@@ -1,9 +1,9 @@
-from PyQt5.QtCore import Qt, QPoint, QTimer
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QImage, QPainter, QPen
 from PyQt5.QtWidgets import QWidget
 
 from src import constants
-from src.entities.BigAsteroidA import BigAsteroidA
+from src.entities.asteroids.BigAsteroidA import BigAsteroidA
 from src.entities.Starship import Starship
 
 
