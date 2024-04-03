@@ -23,6 +23,8 @@ class BigAsteroidA(MovableObject):
         self.j = QPoint(self.position.x() + 32, self.position.y() + 67)
         self.w = QPoint(self.position.x() - 17, self.position.y() + 47)
         self.v = QPoint(self.position.x() - 32, self.position.y() + 67)
+    def upd(self):
+        pass
 
     def paint(self, painter: QPainter):
         painter.drawLine(self.a, self.b)
