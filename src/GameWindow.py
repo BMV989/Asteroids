@@ -22,12 +22,13 @@ class GameWindow(QWidget):
         self.asteroids = [BigAsteroidA()]
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
-        self.timer.start(1000 // constants.FPS)
 
     def game_loop(self):
-        self.starship.calc_a()
-        self.starship.calc_v()
-        self.starship.calc_all_cords()
+        # self.starship.calc_a()
+        # self.starship.calc_v()
+        # self.starship.calc_all_cords()
+        for aster in self.asteroids:
+            aster.update_with_bounds()
         self.update()
 
     def paintEvent(self, event):

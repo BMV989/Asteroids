@@ -9,7 +9,6 @@ class StartWidget(QWidget):
 
         self.width = width
         self.height = height
-        print(self.width, self.height)
 
         self.resize(self.width, self.height)
 
@@ -24,7 +23,7 @@ class StartWidget(QWidget):
         label.setStyleSheet("""
                     color: White;
                 """)
-        label.setFont(QFont("Times", 100))
+        label.setFont(QFont("Arial", 100))
 
         label = QLabel("Press space to play", self)
         label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
@@ -34,7 +33,7 @@ class StartWidget(QWidget):
         label.setStyleSheet("""
                     color: White;
                 """)
-        label.setFont(QFont("Times", 70))
+        label.setFont(QFont("Arial", 70))
 
         self.show()
 

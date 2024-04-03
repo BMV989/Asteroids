@@ -28,6 +28,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.is_start = False
             self.start_screen.hide()
             self.setCentralWidget(self.game)
+            self.game.timer.start(1000 // constants.FPS)
             # self.showMaximized()
 
         elif event.key() == Qt.Key_Left:

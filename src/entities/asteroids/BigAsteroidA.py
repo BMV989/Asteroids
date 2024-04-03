@@ -1,41 +1,36 @@
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPainter
 
-from src import constants
-from src.entities.MovableObject import MovableObject
-from random import randint
+
+from src.entities.asteroids.BaseAsteroid import BaseAsteroid
 
 
-class BigAsteroidA(MovableObject):
+class BigAsteroidA(BaseAsteroid):
     def __init__(self):
-        self.position = QPoint(randint(120, constants.WIDOW_WIDTH - 120),
-                               randint(120, constants.WIDOW_HEIGHT - 120))
-        super().__init__(self.position)
-        self.a = QPoint(self.position.x() - 67, self.position.y() + 31)
-        self.b = QPoint(self.position.x() - 48, self.position.y() - 4)
-        self.c = QPoint(self.position.x() - 68, self.position.y() - 40)
-        self.d = QPoint(self.position.x() - 24, self.position.y() - 75)
-        self.e = QPoint(self.position.x(), self.position.y() - 56)
-        self.f = QPoint(self.position.x() + 39, self.position.y() - 75)
-        self.g = QPoint(self.position.x() + 74, self.position.y() - 40)
-        self.h = QPoint(self.position.x() + 33, self.position.y() - 22)
-        self.i = QPoint(self.position.x() + 75, self.position.y() + 14)
-        self.j = QPoint(self.position.x() + 32, self.position.y() + 67)
-        self.w = QPoint(self.position.x() - 17, self.position.y() + 47)
-        self.v = QPoint(self.position.x() - 32, self.position.y() + 67)
-    def upd(self):
-        pass
+        super().__init__()
 
     def paint(self, painter: QPainter):
-        painter.drawLine(self.a, self.b)
-        painter.drawLine(self.b, self.c)
-        painter.drawLine(self.c, self.d)
-        painter.drawLine(self.d, self.e)
-        painter.drawLine(self.e, self.f)
-        painter.drawLine(self.f, self.g)
-        painter.drawLine(self.g, self.h)
-        painter.drawLine(self.h, self.i)
-        painter.drawLine(self.i, self.j)
-        painter.drawLine(self.j, self.w)
-        painter.drawLine(self.w, self.v)
-        painter.drawLine(self.v, self.a)
+        a = QPoint(self.pos.x() - 67, self.pos.y() + 31)
+        b = QPoint(self.pos.x() - 48, self.pos.y() - 4)
+        c = QPoint(self.pos.x() - 68, self.pos.y() - 40)
+        d = QPoint(self.pos.x() - 24, self.pos.y() - 75)
+        e = QPoint(self.pos.x(), self.pos.y() - 56)
+        f = QPoint(self.pos.x() + 39, self.pos.y() - 75)
+        g = QPoint(self.pos.x() + 74, self.pos.y() - 40)
+        h = QPoint(self.pos.x() + 33, self.pos.y() - 22)
+        i = QPoint(self.pos.x() + 75, self.pos.y() + 14)
+        j = QPoint(self.pos.x() + 32, self.pos.y() + 67)
+        w = QPoint(self.pos.x() - 17, self.pos.y() + 47)
+        v = QPoint(self.pos.x() - 32, self.pos.y() + 67)
+        painter.drawLine(a, b)
+        painter.drawLine(b, c)
+        painter.drawLine(c, d)
+        painter.drawLine(d, e)
+        painter.drawLine(e, f)
+        painter.drawLine(f, g)
+        painter.drawLine(g, h)
+        painter.drawLine(h, i)
+        painter.drawLine(i, j)
+        painter.drawLine(j, w)
+        painter.drawLine(w, v)
+        painter.drawLine(v, a)
