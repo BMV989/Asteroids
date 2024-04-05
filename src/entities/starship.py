@@ -14,7 +14,7 @@ class Starship(MovableObject):
     def __init__(self):
         self.center = [constants.WIDOW_WIDTH // 2, constants.WIDOW_HEIGHT // 2]
         self.angle = 40 / 180 * pi  # радианы
-        self.angle_rotation = 60  # в градусах
+        self.angle_rotation = 0  # в градусах
         self.angel_vector = 0  # градусах
         self.side = 70
         self.r = self.side * cos(self.angle / 2)
