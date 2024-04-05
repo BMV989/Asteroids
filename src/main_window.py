@@ -2,34 +2,27 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
 from src import constants
-from src.GameWindow import GameWindow
-from src.StartWidget import StartWidget
+from src.game_window import GameWindow
+from src.start_widget import StartWidget
 
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.is_start = True
-        self.on_move = False
-
-        self.width = constants.WIDOW_WIDTH
-        self.height = constants.WIDOW_HEIGHT
-        self.resize(self.width, self.height)
+        self.resize(constants.WIDOW_WIDTH, constants.WIDOW_HEIGHT)
 
         self.setWindowTitle("Asteroids")
 
-        self.start_screen = StartWidget(self.width, self.height)
-        self.game = GameWindow(self.width, self.height)
+        self.start_screen = StartWidget(constants.WIDOW_WIDTH, constants.WIDOW_HEIGHT)
+        self.game = GameWindow(constants.WIDOW_WIDTH, constants.WIDOW_HEIGHT)
         self.setCentralWidget(self.start_screen)
 
     def keyPressEvent(self, event):
-        if (event.key() == Qt.Key_Space) and self.is_start:
-            self.is_start = False
+        if (event.key() == Qt.Key_Space) and self.start_screen.isActiveWindow():
             self.start_screen.hide()
             self.setCentralWidget(self.game)
             self.game.timer.start(1000 // constants.FPS)
-            # self.showMaximized()
 
         elif event.key() == Qt.Key_Left:
             self.game.on_rotate_left()
@@ -37,10 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.game.on_rotate_right()
 
         elif event.key() == Qt.Key_Up:
-            self.on_move = True
             self.game.on_move_forward()
 
     def keyReleaseEvent(self, event):
-        if event.key() == Qt.Key_Up:
-            self.on_move = False
-            # self.game.zero_a()
+        if event.key() == Qt.Key_Up: pass

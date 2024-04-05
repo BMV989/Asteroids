@@ -12,9 +12,6 @@ class StartWidget(QWidget):
 
         self.resize(self.width, self.height)
 
-        self.image = QImage(self.width, self.height, QImage.Format_RGB32)
-        self.image.fill(Qt.black)
-
         label = QLabel("Asteroids", self)
         label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -38,5 +35,7 @@ class StartWidget(QWidget):
         self.show()
 
     def paintEvent(self, event):
+        image = QImage(self.width, self.height, QImage.Format_RGB32)
+        image.fill(Qt.black)
         painter = QPainter(self)
-        painter.drawImage(self.rect(), self.image, self.image.rect())
+        painter.drawImage(self.rect(), image, image.rect())
