@@ -19,18 +19,25 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.start_screen)
 
     def keyPressEvent(self, event):
-        if (event.key() == Qt.Key_Space) and self.start_screen.isActiveWindow():
+        if (event.key() == Qt.Key_Space) and not self.game.isActiveWindow():
             self.start_screen.hide()
             self.setCentralWidget(self.game)
             self.game.timer.start(1000 // constants.FPS)
-
         elif event.key() == Qt.Key_Left:
             self.game.on_rotate_left()
         elif event.key() == Qt.Key_Right:
             self.game.on_rotate_right()
-
         elif event.key() == Qt.Key_Up:
+            self.game.on_move()
             self.game.on_move_forward()
+        elif event.key() == Qt.Key_Space:
+            self.game.shoot()
 
     def keyReleaseEvent(self, event):
-        if event.key() == Qt.Key_Up: pass
+        if event.key() == Qt.Key_Left:
+            self.game.stop_rotate_left()
+        elif event.key() == Qt.Key_Right:
+            self.game.stop_rotate_right()
+        elif event.key() == Qt.Key_Up:
+            self.game.stop_move()
+            self.game.stop_rotate_left()

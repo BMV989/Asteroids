@@ -49,11 +49,10 @@ class Asteroid(MovableObject):
     def upd(self):
         self.pos.setX(int(self.pos.x() + self.speed * sin(radians(self.deg))))
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
+        self.pos.setX((self.pos.x() + constants.WIDOW_WIDTH) % constants.WIDOW_WIDTH)
+        self.pos.setY((self.pos.y() + constants.WIDOW_HEIGHT) % constants.WIDOW_HEIGHT)
 
     def paint(self, painter: QPainter):
         painter.translate(self.pos.x(), self.pos.y())
         painter.drawPolygon(self.types[self.type])
         painter.translate(-self.pos.x(), -self.pos.y())
-
-    def __repr__(self):
-        return f"Asteroid(kind: {self.kind}, speed: {self.speed}, deg: {self.deg})"

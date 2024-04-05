@@ -22,11 +22,6 @@ class MovableObject(ABC):
     def paint(self, painter: QPainter):
         pass
 
-    def update_with_bounds(self):
-        self.upd()
-        self.pos.setX((self.pos.x() + constants.WIDOW_WIDTH) % constants.WIDOW_WIDTH)
-        self.pos.setY((self.pos.y() + constants.WIDOW_HEIGHT) % constants.WIDOW_HEIGHT)
-
     def is_in_collision_with(self, other: MovableObject) -> bool:
         return (self.pos.x() < other.pos.x() + other.size.width() and
                 self.pos.x() + self.size.width() > other.pos.x() and
