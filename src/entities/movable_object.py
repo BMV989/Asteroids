@@ -9,10 +9,9 @@ from src import constants
 
 
 class MovableObject(ABC):
-    def __init__(self, position: QPoint, size: QSize, speed: float = 0, deg: int = 0):
+    def __init__(self, position: QPoint, size: QSize, deg: int = 0):
         self.size = size
         self.pos = position
-        self.speed = speed
         self.deg = deg
 
     @abstractmethod

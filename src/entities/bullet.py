@@ -9,7 +9,8 @@ from src.entities.movable_object import MovableObject
 
 class Bullet(MovableObject):
     def __init__(self, pos: QPoint, deg: int):
-        super().__init__(pos, QSize(4, 4), 12, deg)
+        super().__init__(pos, QSize(4, 4), deg)
+        self.speed = 12
 
     def upd(self):
         self.pos.setX(int(self.pos.x() + self.speed * sin(radians(self.deg))))

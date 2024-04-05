@@ -11,13 +11,13 @@ from src.entities.movable_object import MovableObject
 class Asteroid(MovableObject):
     def __init__(self, kind: int = 3, pos: QPoint = None):
         pos = pos or QPoint(randint(0, constants.WIDOW_WIDTH), randint(0, constants.WIDOW_HEIGHT))
-        speed = uniform(1.5, 3)
         deg = randint(0, 11) * 30
         self.kind = kind
         size = QSize(40 * self.kind, 40 * self.kind)
-        super().__init__(pos, size, speed, deg)
+        super().__init__(pos, size, deg)
         width = self.size.width()
         height = self.size.height()
+        self.speed = uniform(1.5, 3)
         self.types = {
             1: [
                 QPoint(int(width * 0.5), 0), QPoint(int(width * 0.75), int(height * 0.1)),
