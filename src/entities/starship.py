@@ -148,5 +148,7 @@ class Starship(MovableObject):
         painter.drawLine(*c4, *c5)
 
         if self.fast_forward_mode and random() < 0.6:
-            painter.drawLine(*c6, int(self.center[0]) + 15, int(self.center[1]) + 15)
-            painter.drawLine(*c7, int(self.center[0]) + 15, int(self.center[1]) + 15)
+            painter.drawLine(*c6, int(self.center[0]) + int(15 * sin(self.angle_rotation / 180 * pi)),
+                             int(self.center[1]) + 15 * int(cos(self.angle_rotation / 180 * pi)))
+            painter.drawLine(*c7, int(self.center[0]) + int(15 * sin(self.angle_rotation / 180 * pi)),
+                             int(self.center[1]) + int(15 * cos(self.angle_rotation / 180 * pi)))
