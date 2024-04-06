@@ -68,11 +68,9 @@ class Starship(MovableObject):
         if self.fast_forward_mode:
             self.move()
         if self.rotate_left:
-            for i in range(1000):
-                self.rotate(0.01)
+            self.rotate(7.5)
         if self.rotate_right:
-            for i in range(1000):
-                self.rotate(-0.01)
+            self.rotate(-7.5)
 
         if 0 <= self.angel_vector <= 90:
             self.center[0] -= self.speed[0]
@@ -149,6 +147,6 @@ class Starship(MovableObject):
         painter.drawLine(*c1, *c3)
         painter.drawLine(*c4, *c5)
 
-        if self.fast_forward_mode and random() < 0.8:
-            painter.drawLine(*c6, int(self.center[0]) + 10, int(self.center[1]) + 10)
-            painter.drawLine(*c7, int(self.center[0]) + 10, int(self.center[1]) + 10)
+        if self.fast_forward_mode and random() < 0.6:
+            painter.drawLine(*c6, int(self.center[0]) + 15, int(self.center[1]) + 15)
+            painter.drawLine(*c7, int(self.center[0]) + 15, int(self.center[1]) + 15)

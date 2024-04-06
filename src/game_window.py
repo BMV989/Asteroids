@@ -23,7 +23,7 @@ class GameWindow(QWidget):
 
     def game_loop(self):
         for aster in self.asteroids:
-            aster.update_with_bounds()
+            aster.upd()
         self.starship.upd()
         for bullet in self.bullets:
             bullet.upd()
