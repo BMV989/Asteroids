@@ -68,11 +68,9 @@ class Starship(MovableObject):
         if self.fast_forward_mode:
             self.move()
         if self.rotate_left:
-            for i in range(1000):
-                self.rotate(0.01)
+            self.rotate(7.5)
         if self.rotate_right:
-            for i in range(1000):
-                self.rotate(-0.01)
+            self.rotate(-7.5)
 
         if 0 <= self.angel_vector <= 90:
             self.center[0] -= self.speed[0]
