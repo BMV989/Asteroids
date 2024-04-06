@@ -12,7 +12,7 @@ from src.entities.movable_object import MovableObject
 
 class Starship(MovableObject):
     def __init__(self):
-        self.center = [constants.WIDOW_WIDTH // 2, constants.WIDOW_HEIGHT // 2]
+        self.center = [constants.WINDOW_WIDTH // 2, constants.WINDOW_HEIGHT // 2]
         self.angle = 40 / 180 * pi  # радианы
         self.angle_rotation = 0  # в градусах
         self.angel_vector = 0  # градусах
@@ -85,8 +85,8 @@ class Starship(MovableObject):
             self.center[0] += self.speed[0]
             self.center[1] -= self.speed[1]
 
-        self.center[0] = (self.center[0] + constants.WIDOW_WIDTH) % constants.WIDOW_WIDTH
-        self.center[1] = (self.center[1] + constants.WIDOW_HEIGHT) % constants.WIDOW_HEIGHT
+        self.center[0] = (self.center[0] + constants.WINDOW_WIDTH) % constants.WINDOW_WIDTH
+        self.center[1] = (self.center[1] + constants.WINDOW_HEIGHT) % constants.WINDOW_HEIGHT
         self.slow()
         self.calc_all_cords()
 
@@ -147,6 +147,8 @@ class Starship(MovableObject):
         painter.drawLine(*c1, *c3)
         painter.drawLine(*c4, *c5)
 
-        if self.fast_forward_mode and random() < 0.6:
-            painter.drawLine(*c6, int(self.center[0]) + 15, int(self.center[1]) + 15)
-            painter.drawLine(*c7, int(self.center[0]) + 15, int(self.center[1]) + 15)
+        if self.fast_forward_mode and random() < 0.75:
+            painter.drawLine(*c6, int(self.center[0]) + int(15 * sin(self.angle_rotation / 180 * pi)),
+                             int(self.center[1]) + int(15 * cos(self.angle_rotation / 180 * pi)))
+            painter.drawLine(*c7, int(self.center[0]) + int(15 * sin(self.angle_rotation / 180 * pi)),
+                             int(self.center[1]) + int(15 * cos(self.angle_rotation / 180 * pi)))
