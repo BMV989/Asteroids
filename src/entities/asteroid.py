@@ -10,7 +10,7 @@ from src.entities.movable_object import MovableObject
 
 class Asteroid(MovableObject):
     def __init__(self, kind: int = 3, pos: QPoint = None):
-        pos = pos or QPoint(randint(0, constants.WIDOW_WIDTH), randint(0, constants.WIDOW_HEIGHT))
+        pos = pos or QPoint(randint(0, constants.WINDOW_WIDTH), randint(0, constants.WINDOW_HEIGHT))
         deg = randint(0, 11) * 30
         self.kind = kind
         size = QSize(40 * self.kind, 40 * self.kind)
@@ -49,8 +49,8 @@ class Asteroid(MovableObject):
     def upd(self):
         self.pos.setX(int(self.pos.x() + self.speed * sin(radians(self.deg))))
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
-        self.pos.setX((self.pos.x() + constants.WIDOW_WIDTH) % constants.WIDOW_WIDTH)
-        self.pos.setY((self.pos.y() + constants.WIDOW_HEIGHT) % constants.WIDOW_HEIGHT)
+        self.pos.setX((self.pos.x() + constants.WINDOW_WIDTH) % constants.WINDOW_WIDTH)
+        self.pos.setY((self.pos.y() + constants.WINDOW_HEIGHT) % constants.WINDOW_HEIGHT)
 
     def paint(self, painter: QPainter):
         painter.translate(self.pos.x(), self.pos.y())

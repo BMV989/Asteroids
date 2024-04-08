@@ -26,8 +26,8 @@ class Bullet(MovableObject):
             self.pos.setY(self.pos.y() - int(30 * cos(pi * 2 - self.deg / 180 * pi)))
 
     def is_out_of_bounds(self):
-        return not (0 <= self.pos.x() <= constants.WIDOW_WIDTH
-                    and 0 <= self.pos.y() <= constants.WIDOW_HEIGHT)
+        return not (0 <= self.pos.x() <= constants.WINDOW_WIDTH
+                    and 0 <= self.pos.y() <= constants.WINDOW_HEIGHT)
 
     def paint(self, painter: QPainter):
         painter.setPen(QPen(Qt.white, 4, Qt.SolidLine))
