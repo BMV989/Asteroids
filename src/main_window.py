@@ -19,7 +19,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.start_screen)
 
     def keyPressEvent(self, event):
-        print(event.key())
         if (event.key() == Qt.Key_Space) and not self.game.isActiveWindow():
             self.start_screen.hide()
             self.setCentralWidget(self.game)

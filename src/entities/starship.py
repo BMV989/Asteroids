@@ -46,7 +46,7 @@ class Starship(MovableObject):
         self.side_x6 = int(self.x + self.side * 0.4 * sin(self.angle / 2))
         self.side_y6 = int(self.y + self.side * 0.4 * cos(self.angle / 2))
         #########################################
-        super().__init__(QPoint(int(self.x), int(self.y)), QSize(int(2 * self.small_r), int(self.r)))
+        super().__init__(QPoint(int(self.center[0]), int(self.center[1])), QSize(int(2 * self.small_r), int(self.r)))
 
     def move(self):
         self.angel_vector = copy(self.angle_rotation)
@@ -63,6 +63,10 @@ class Starship(MovableObject):
         elif 270 < self.angel_vector <= 360:
             self.speed[0] += 10 * sin(pi * 2 - self.angel_vector / 180 * pi)
             self.speed[1] += 10 * cos(pi * 2 - self.angel_vector / 180 * pi)  # -
+
+    # def reset(self):
+    #     self.center = [constants.WINDOW_WIDTH // 2, constants.WINDOW_HEIGHT // 2]
+    #     self.angle_rotation = 0
 
     def upd(self):
         if self.fast_forward_mode:
@@ -88,6 +92,7 @@ class Starship(MovableObject):
         self.center[0] = (self.center[0] + constants.WINDOW_WIDTH) % constants.WINDOW_WIDTH
         self.center[1] = (self.center[1] + constants.WINDOW_HEIGHT) % constants.WINDOW_HEIGHT
         self.slow()
+        self.pos = QPoint(int(self.center[0]), int(self.center[1]))
         self.calc_all_cords()
 
     def slow(self):
