@@ -2,15 +2,14 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QFont, QPainter
 from PyQt5.QtWidgets import QLabel, QWidget, QSizePolicy
 
+from src import constants
+
 
 class StartWidget(QWidget):
-    def __init__(self, width, height):
+    def __init__(self):
         super().__init__()
 
-        self.width = width
-        self.height = height
-
-        self.resize(self.width, self.height)
+        self.resize(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
 
         label = QLabel("Asteroids", self)
         label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
@@ -35,7 +34,7 @@ class StartWidget(QWidget):
         self.show()
 
     def paintEvent(self, event):
-        image = QImage(self.width, self.height, QImage.Format_RGB32)
+        image = QImage(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT, QImage.Format_RGB32)
         image.fill(Qt.black)
         painter = QPainter(self)
         painter.drawImage(self.rect(), image, image.rect())

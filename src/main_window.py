@@ -14,8 +14,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setWindowTitle("Asteroids")
 
-        self.start_screen = StartWidget(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
-        self.game = GameWindow(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
+        self.start_screen = StartWidget()
+        self.game = GameWindow()
         self.setCentralWidget(self.start_screen)
 
     def keyPressEvent(self, event):
