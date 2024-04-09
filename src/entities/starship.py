@@ -146,6 +146,9 @@ class Starship(MovableObject):
         self.side_x6 = int(self.small_c_x1 + self.small_r * 0.4 * cos(angle_in_rads))
         self.side_y6 = int(self.small_c_y1 - self.small_r * 0.4 * sin(angle_in_rads))
 
+    def reset(self):
+        self.__init__()
+
     def paint(self, painter: QPainter):
         c1, c2, c3, c4, c5, c6, c7 = self.pack_cords()
         painter.drawLine(*c1, *c2)

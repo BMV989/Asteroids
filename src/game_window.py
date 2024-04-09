@@ -1,7 +1,7 @@
 from copy import copy
 
 from PyQt5.QtCore import Qt, QTimer, QPoint
-from PyQt5.QtGui import QImage, QPainter, QPen
+from PyQt5.QtGui import QImage, QPainter, QPen, QFont
 from PyQt5.QtWidgets import QWidget
 
 from src import constants
@@ -11,57 +11,50 @@ from src.entities.starship import Starship
 
 
 class GameWindow(QWidget):
-    def __init__(self, width, height):
+    def __init__(self):
         super().__init__()
 
-        self.width = width
-        self.height = height
         self.bullets = []
-        self.resize(self.width, self.height)
+        self.resize(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
 
         self.starship = Starship()
+        self.score = 0
+        self.lives = constants.LIVES
         self.asteroids = [Asteroid() for _ in range(6)]
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
 
+
     def game_loop(self):
+        asteroids_for_del = set()
+        self.starship.upd()
         if len(self.asteroids) < 6:
             self.asteroids.append(Asteroid())
         for aster in self.asteroids:
-            if aster.kind != 3:
-                pass
             aster.upd()
 
-            if self.starship.is_in_collision_with(aster):
-                print("you lose")
-                self.starship = Starship()
-                self.bullets = []
-                self.asteroids = [Asteroid() for _ in range(6)]
-
-        self.starship.upd()
+            if not self.starship.is_in_collision_with(aster): continue
+            self.lives -= 1
+            if self.lives == 0:  return self.restart()
+            self.starship.reset()
+            asteroids_for_del.add(aster)
         bullets_for_del = set()
-        asteroids_for_del = set()
         for bullet in self.bullets:
             bullet.upd()
             for asteroid in self.asteroids:
                 if bullet.is_in_collision_with(asteroid):
                     bullets_for_del.add(bullet)
-                    # self.asteroids.remove(asteroid)
                     asteroids_for_del.add(asteroid)
             if bullet.is_out_of_bounds():
                 bullets_for_del.add(bullet)
         for bullet in bullets_for_del:
             self.bullets.remove(bullet)
-        for asteroid in asteroids_for_del:
-            self.asteroids.remove(asteroid)
-            if asteroid.kind > 1:
-                self.asteroids.append(Asteroid(asteroid.kind - 1, copy(asteroid.pos)))  # необходима копия
-                self.asteroids.append(Asteroid(asteroid.kind - 1, copy(asteroid.pos)))
-
+        for aster in asteroids_for_del:
+            self.destroy_aster(aster)
         self.update()
 
     def paintEvent(self, event):
-        image = QImage(self.width, self.height, QImage.Format_RGB32)
+        image = QImage(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT, QImage.Format_RGB32)
         image.fill(Qt.black)
         painter = QPainter(self)
         painter.drawImage(self.rect(), image, image.rect())
@@ -71,6 +64,9 @@ class GameWindow(QWidget):
             aster.paint(painter)
         for bullet in self.bullets:
             bullet.paint(painter)
+        painter.setFont(QFont('Courier New', 24))
+        painter.drawText(10, 60, str(self.score))
+        painter.drawText(10, 100, "A" * self.lives)
 
     def shoot(self):
         self.bullets.append(
@@ -97,3 +93,21 @@ class GameWindow(QWidget):
     def on_move_forward(self):
         self.starship.move()
         self.starship.calc_all_cords()
+    def destroy_aster(self, aster: Asteroid):
+        reward = {
+            1: 100,
+            2: 50,
+            3: 20
+        }
+        self.asteroids.remove(aster)
+        self.score += reward[aster.kind]
+        if aster.kind > 1:
+            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))  # необходима копия
+            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))
+
+    def restart(self):
+        self.starship = Starship()
+        self.asteroids = [Asteroid() for _ in range(6)]
+        self.bullets = []
+        self.score = 0
+        self.lives = constants.LIVES
