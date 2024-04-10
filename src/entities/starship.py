@@ -22,8 +22,7 @@ class Starship(MovableObject):
         self.r2 = self.r * 0.2
         self.speed = [0, 0]
         self.fast_forward_mode = False
-        self.rotate_left = False
-        self.rotate_right = False
+        self.rotation_direction = 0
         #########################################
         self.x = self.center[0]  # координаты носа
         self.y = self.center[1] - self.r  # координаты носа
@@ -68,10 +67,8 @@ class Starship(MovableObject):
     def upd(self):
         if self.fast_forward_mode:
             self.move()
-        if self.rotate_left:
-            self.rotate(7.5)
-        if self.rotate_right:
-            self.rotate(-7.5)
+        if self.rotation_direction:
+            self.rotate(self.rotation_direction * 7.5)
 
         if 0 <= self.angel_vector <= 90:
             self.center[0] -= self.speed[0]

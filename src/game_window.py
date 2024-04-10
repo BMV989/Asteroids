@@ -74,16 +74,13 @@ class GameWindow(QWidget):
         self.starship.fast_forward_mode = False
 
     def on_rotate_left(self):
-        self.starship.rotate_left = True
+        self.starship.rotation_direction = 1
 
-    def stop_rotate_left(self):
-        self.starship.rotate_left = False
+    def stop_rotate(self):
+        self.starship.rotation_direction = 0
 
     def on_rotate_right(self):
-        self.starship.rotate_right = True
-
-    def stop_rotate_right(self):
-        self.starship.rotate_right = False
+        self.starship.rotation_direction = -1
 
     def on_move_forward(self):
         self.starship.move()
