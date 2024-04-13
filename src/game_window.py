@@ -13,17 +13,12 @@ from src.entities.starship import Starship
 class GameWindow(QWidget):
     def __init__(self):
         super().__init__()
-
-        self.bullets = []
         self.resize(constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT)
 
-        self.starship = Starship()
-        self.score = 0
-        self.lives = constants.LIVES
-        self.asteroids = [Asteroid() for _ in range(6)]
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
-
+        
+        self.init_game()
 
     def game_loop(self):
         asteroids_for_del = set()
@@ -35,7 +30,7 @@ class GameWindow(QWidget):
 
             if not self.starship.is_in_collision_with(aster): continue
             self.lives -= 1
-            if self.lives == 0:  return self.restart()
+            if self.lives == 0:  return self.init_game()
             self.starship.reset()
             asteroids_for_del.add(aster)
         bullets_for_del = set()
@@ -79,20 +74,18 @@ class GameWindow(QWidget):
         self.starship.fast_forward_mode = False
 
     def on_rotate_left(self):
-        self.starship.rotate_left = True
+        self.starship.rotation_direction = 1
 
-    def stop_rotate_left(self):
-        self.starship.rotate_left = False
+    def stop_rotate(self):
+        self.starship.rotation_direction = 0
 
     def on_rotate_right(self):
-        self.starship.rotate_right = True
-
-    def stop_rotate_right(self):
-        self.starship.rotate_right = False
+        self.starship.rotation_direction = -1
 
     def on_move_forward(self):
         self.starship.move()
         self.starship.calc_all_cords()
+
     def destroy_aster(self, aster: Asteroid):
         reward = {
             1: 100,
@@ -105,7 +98,7 @@ class GameWindow(QWidget):
             self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))  # необходима копия
             self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))
 
-    def restart(self):
+    def init_game(self):
         self.starship = Starship()
         self.asteroids = [Asteroid() for _ in range(6)]
         self.bullets = []

@@ -35,8 +35,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_Left or event.key() == Qt.Key_A:
-            self.game.stop_rotate_left()
+            self.game.stop_rotate()
         elif event.key() == Qt.Key_Right or event.key() == Qt.Key_D:
-            self.game.stop_rotate_right()
+            self.game.stop_rotate()
         elif event.key() == Qt.Key_Up or event.key() == Qt.Key_W:
             self.game.stop_move()
