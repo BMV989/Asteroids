@@ -53,8 +53,8 @@ class Asteroid(MovableObject):
     def upd(self):
         self.pos.setX(int(self.pos.x() + self.speed * sin(radians(self.deg))))
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
-        self.pos.setX((self.pos.x() + constants.CLOSURE_BUFFER_WIDTH) % constants.CLOSURE_BUFFER_WIDTH)
-        self.pos.setY((self.pos.y() + constants.CLOSURE_BUFFER_HEIGHT) % constants.CLOSURE_BUFFER_HEIGHT)
+        self.pos.setX((self.pos.x() + constants.ASTEROIDS_BUFFER_WIDTH) % constants.ASTEROIDS_BUFFER_WIDTH)
+        self.pos.setY((self.pos.y() + constants.ASTEROIDS_BUFFER_HEIGHT) % constants.ASTEROIDS_BUFFER_HEIGHT)
         self.corner_pos.setX(int(self.pos.x() - self.size.width()//2))
         self.corner_pos.setY(int(self.pos.y() - self.size.height()//2))
 
