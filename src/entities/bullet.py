@@ -9,7 +9,7 @@ from src.entities.movable_object import MovableObject
 
 class Bullet(MovableObject):
     def __init__(self, pos: QPoint, deg: int):
-        super().__init__(pos, QSize(8, 8), deg)
+        super().__init__(pos, QSize(8, 8), 4, deg)
 
     def upd(self):
         if 0 <= self.deg <= 90:

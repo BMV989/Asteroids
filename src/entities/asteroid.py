@@ -14,9 +14,13 @@ class Asteroid(MovableObject):
         deg = randint(0, 11) * 30
         self.kind = kind
         size = QSize(40 * self.kind, 40 * self.kind)
-        super().__init__(pos, size, deg)
+        #
+        r = 20 * self.kind
+        #
+        super().__init__(pos, size, r, deg)
         width = self.size.width()
         height = self.size.height()
+        self.corner_pos = QPoint(int(pos.x() - width//2), int(pos.y() - height//2))
         self.speed = uniform(1.5, 3)
         self.types = {
             1: [
@@ -51,8 +55,10 @@ class Asteroid(MovableObject):
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
         self.pos.setX((self.pos.x() + constants.CLOSURE_BUFFER_WIDTH) % constants.CLOSURE_BUFFER_WIDTH)
         self.pos.setY((self.pos.y() + constants.CLOSURE_BUFFER_HEIGHT) % constants.CLOSURE_BUFFER_HEIGHT)
+        self.corner_pos.setX(int(self.pos.x() - self.size.width()//2))
+        self.corner_pos.setY(int(self.pos.y() - self.size.height()//2))
 
     def paint(self, painter: QPainter):
-        painter.translate(self.pos.x(), self.pos.y())
+        painter.translate(self.corner_pos.x(), self.corner_pos.y())
         painter.drawPolygon(self.types[self.type])
-        painter.translate(-self.pos.x(), -self.pos.y())
+        painter.translate(-self.corner_pos.x(), -self.corner_pos.y())
