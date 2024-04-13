@@ -49,8 +49,8 @@ class Asteroid(MovableObject):
     def upd(self):
         self.pos.setX(int(self.pos.x() + self.speed * sin(radians(self.deg))))
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
-        self.pos.setX((self.pos.x() + constants.WINDOW_WIDTH) % constants.WINDOW_WIDTH)
-        self.pos.setY((self.pos.y() + constants.WINDOW_HEIGHT) % constants.WINDOW_HEIGHT)
+        self.pos.setX((self.pos.x() + constants.CLOSURE_BUFFER_WIDTH) % constants.CLOSURE_BUFFER_WIDTH)
+        self.pos.setY((self.pos.y() + constants.CLOSURE_BUFFER_HEIGHT) % constants.CLOSURE_BUFFER_HEIGHT)
 
     def paint(self, painter: QPainter):
         painter.translate(self.pos.x(), self.pos.y())
