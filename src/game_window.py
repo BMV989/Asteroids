@@ -1,4 +1,5 @@
 from copy import copy
+import os
 
 from PyQt5.QtCore import Qt, QTimer, QPoint
 from PyQt5.QtGui import QImage, QPainter, QPen, QFont
@@ -17,7 +18,7 @@ class GameWindow(QWidget):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.game_loop)
-        
+
         self.init_game()
 
     def game_loop(self):
@@ -30,22 +31,34 @@ class GameWindow(QWidget):
 
             if not self.starship.is_in_collision_with(aster): continue
             self.lives -= 1
-            if self.lives == 0:  return self.init_game()
+            if self.lives == 0:
+                os.makedirs("./resources", exist_ok=True)
+                with open("./resources/hs_score.txt", "w") as f:
+                    if self.get_hs_score() == '':
+                        f.write(str(max(0, self.score)))
+                    else:
+                        f.write(str(max(int(self.get_hs_score()), self.score)))
+                return self.init_game()
             self.starship.reset()
             asteroids_for_del.add(aster)
         bullets_for_del = set()
         for bullet in self.bullets:
             bullet.upd()
+
             for asteroid in self.asteroids:
                 if bullet.is_in_collision_with(asteroid):
                     bullets_for_del.add(bullet)
                     asteroids_for_del.add(asteroid)
+
             if bullet.is_out_of_bounds():
                 bullets_for_del.add(bullet)
+
         for bullet in bullets_for_del:
             self.bullets.remove(bullet)
+
         for aster in asteroids_for_del:
             self.destroy_aster(aster)
+
         self.update()
 
     def paintEvent(self, event):
@@ -62,6 +75,7 @@ class GameWindow(QWidget):
         painter.setFont(QFont('Courier New', 24))
         painter.drawText(10, 60, str(self.score))
         painter.drawText(10, 100, "A" * self.lives)
+        painter.drawText(10, 140, f"HS:{self.get_hs_score()}")
 
     def shoot(self):
         self.bullets.append(
@@ -85,6 +99,15 @@ class GameWindow(QWidget):
     def on_move_forward(self):
         self.starship.move()
         self.starship.calc_all_cords()
+
+    @staticmethod
+    def get_hs_score():
+        try:
+            with open("./resources/hs_score.txt", "r") as f:
+                print("read from file")
+                return f.readline()
+        except FileNotFoundError:
+            return 0
 
     def destroy_aster(self, aster: Asteroid):
         reward = {
