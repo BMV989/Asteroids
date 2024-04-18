@@ -1,5 +1,6 @@
 from copy import copy
 import os
+from random import randint
 
 from PyQt5.QtCore import Qt, QTimer, QPoint
 from PyQt5.QtGui import QImage, QPainter, QPen, QFont
@@ -23,21 +24,28 @@ class GameWindow(QWidget):
 
     def game_loop(self):
         asteroids_for_del = set()
+        big_asters = 0
         self.starship.upd()
-        if len(self.asteroids) < 6:
+        for i in self.asteroids:
+            if i.kind == 3:
+                big_asters += 1
+        if big_asters < 6:  # len(self.asteroids)
+            big_asters += 1
             self.asteroids.append(Asteroid())
         for aster in self.asteroids:
             aster.upd()
 
-            if not self.starship.is_in_collision_with(aster): continue
+            if not self.starship.is_in_collision_with(aster):
+                continue
             self.lives -= 1
             if self.lives == 0:
                 os.makedirs("./resources", exist_ok=True)
+                hs_score = self.get_hs_score()
                 with open("./resources/hs_score.txt", "w") as f:
-                    if self.get_hs_score() == '':
-                        f.write(str(max(0, self.score)))
+                    if hs_score == '':
+                        f.write(str(self.score))
                     else:
-                        f.write(str(max(int(self.get_hs_score()), self.score)))
+                        f.write(str(max(int(hs_score), self.score)))
                 return self.init_game()
             self.starship.reset()
             asteroids_for_del.add(aster)
@@ -104,7 +112,6 @@ class GameWindow(QWidget):
     def get_hs_score():
         try:
             with open("./resources/hs_score.txt", "r") as f:
-                print("read from file")
                 return f.readline()
         except FileNotFoundError:
             return 0
@@ -118,8 +125,14 @@ class GameWindow(QWidget):
         self.asteroids.remove(aster)
         self.score += reward[aster.kind]
         if aster.kind > 1:
-            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))  # необходима копия
-            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos)))
+            ang_1 = randint(0, 11) * 30
+            ang_2 = 360 - ang_1
+            if ang_1 == 0 or ang_1 == 360:
+                ang_2 = 180
+            elif ang_1 == 180:
+                ang_2 = 0
+            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos), degree=ang_1))  # необходима копия
+            self.asteroids.append(Asteroid(aster.kind - 1, copy(aster.pos), degree=ang_2))
 
     def init_game(self):
         self.starship = Starship()

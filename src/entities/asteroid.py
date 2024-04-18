@@ -1,5 +1,5 @@
 from math import sin, cos, radians
-from random import randint, uniform
+from random import randint, uniform, choice
 
 from PyQt5.QtCore import QPoint, QSize
 from PyQt5.QtGui import QPainter
@@ -9,9 +9,15 @@ from src.entities.movable_object import MovableObject
 
 
 class Asteroid(MovableObject):
-    def __init__(self, kind: int = 3, pos: QPoint = None):
-        pos = pos or QPoint(randint(0, constants.WINDOW_WIDTH), randint(0, constants.WINDOW_HEIGHT))
-        deg = randint(0, 11) * 30
+    def __init__(self, kind: int = 3, pos: QPoint = None, degree=None):
+        pos = pos or QPoint(choice([randint(0, int(constants.WINDOW_WIDTH * 0.3)),
+                                    randint(int(constants.WINDOW_WIDTH * 0.7), constants.WINDOW_WIDTH)]),
+                            choice([randint(0, int(constants.WINDOW_HEIGHT * 0.3)),
+                                    randint(int(constants.WINDOW_HEIGHT * 0.7), constants.WINDOW_HEIGHT)]))
+        if degree is None:
+            deg = randint(0, 11) * 30
+        else:
+            deg = degree
         self.kind = kind
         size = QSize(40 * self.kind, 40 * self.kind)
         #
@@ -20,7 +26,7 @@ class Asteroid(MovableObject):
         super().__init__(pos, size, r, deg)
         width = self.size.width()
         height = self.size.height()
-        self.corner_pos = QPoint(int(pos.x() - width//2), int(pos.y() - height//2))
+        self.corner_pos = QPoint(int(pos.x() - width // 2), int(pos.y() - height // 2))
         self.speed = uniform(1.5, 3)
         self.types = {
             1: [
@@ -55,8 +61,8 @@ class Asteroid(MovableObject):
         self.pos.setY(int(self.pos.y() - self.speed * cos(radians(self.deg))))
         self.pos.setX((self.pos.x() + constants.ASTEROIDS_BUFFER_WIDTH) % constants.ASTEROIDS_BUFFER_WIDTH)
         self.pos.setY((self.pos.y() + constants.ASTEROIDS_BUFFER_HEIGHT) % constants.ASTEROIDS_BUFFER_HEIGHT)
-        self.corner_pos.setX(int(self.pos.x() - self.size.width()//2))
-        self.corner_pos.setY(int(self.pos.y() - self.size.height()//2))
+        self.corner_pos.setX(int(self.pos.x() - self.size.width() // 2))
+        self.corner_pos.setY(int(self.pos.y() - self.size.height() // 2))
 
     def paint(self, painter: QPainter):
         painter.translate(self.corner_pos.x(), self.corner_pos.y())
